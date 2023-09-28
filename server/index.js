@@ -13,7 +13,9 @@ const secretKey = crypto.randomBytes(32).toString('hex');
 
 const io = require("socket.io")(socketPORT, {
   cors: {
-    origin: ["http://localhost:3000"]
+    origin: ["https://halo-78rf.vercel.app"],
+    methods: ["POST, GET, DELETE, PUT"],
+    credentials: true
   }
 });
 
@@ -29,7 +31,7 @@ const Message = require("./model/messages");
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://halo-78rf.vercel.app"],
     methods: ["POST, GET, DELETE, PUT"],
     credentials: true,
   })
