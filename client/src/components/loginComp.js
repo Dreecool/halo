@@ -7,7 +7,7 @@ import io from "socket.io-client";
 
 const LoginComponents = () => {
 
-  const socket = io("https://halo-kappa.vercel.app");
+  const socket = io("wss://halo-kappa.vercel.app");
   Axios.defaults.withCredentials = true
   const Navigate = useNavigate()
   
