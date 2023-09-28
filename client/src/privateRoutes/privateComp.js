@@ -9,7 +9,7 @@ const PrivateRoute = ({ element }) => {
 
   useEffect(() => {
 
-    Axios.get("http://localhost:3001/protectedRoute").then((response) => {
+    Axios.get("https://halo-kappa.vercel.app/protectedRoute").then((response) => {
 
       if(response.data.message === "Authorized") {
 
