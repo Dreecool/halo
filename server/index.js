@@ -6,12 +6,10 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs")
-const socketPORT = 3002;
 const PORT = 3001;
 const crypto = require('crypto');
 const secretKey = crypto.randomBytes(32).toString('hex');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+const socketio = require('socket.io');
 
 
 
@@ -25,7 +23,7 @@ const Message = require("./model/messages");
 
 app.use(
   cors({
-    origin: ["https://halo-78rf.vercel.app"],
+    origin: ["http://localhost:3000"],
     methods: ["POST, GET, DELETE, PUT"],
     credentials: true,
   })
@@ -189,9 +187,15 @@ app.get("/getList", async(req, res) => {
 
 })
 
+
+const server = app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});
+
+const io = socketio(server, { pingTimeout: 60000 });
+
+
 //sockets
-
-
 
 io.on('connection', async (socket) => {
 
@@ -203,7 +207,7 @@ io.on('connection', async (socket) => {
       try {
 
         await Register.findByIdAndUpdate(id, { status: true });
-
+        console.log("success")
         
       
       } catch(error) {
@@ -217,6 +221,8 @@ io.on('connection', async (socket) => {
     
     socket.on('send-id', async (userID) => {
 
+      // After receiving the user ID, emit a string to the frontend
+
       try {
 
         if(!userID) {
@@ -225,11 +231,12 @@ io.on('connection', async (socket) => {
 
         } 
 
-       const onlineUsers = await Register.find({ status: true, _id: { $ne: userID } });
+          const onlineUsers = await Register.find({ status: true, _id: { $ne: userID } });
 
         socket.emit("sended", onlineUsers)
 
       
+
       } catch(error) {
 
 
@@ -253,8 +260,4 @@ io.on('connection', async (socket) => {
     console.error(error);
   }
 
-});
-
-http.listen(PORT, function(){
-    console.log('Express server listening on port ' + PORT);
 });
