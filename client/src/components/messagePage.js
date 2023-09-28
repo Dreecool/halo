@@ -9,7 +9,7 @@ const MessagePage = ({ userID }) => {
 
   useEffect(() => {
 
-    Axios.get("http://localhost:3001/getList").then(async(response) => {
+    Axios.get("https://halo-kappa.vercel.app/getList").then(async(response) => {
 
     await userID.map(async(val) => {
 
