@@ -10,12 +10,9 @@ const socketPORT = 3002;
 const PORT = 3001;
 const crypto = require('crypto');
 const secretKey = crypto.randomBytes(32).toString('hex');
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-const io = require("socket.io")(socketPORT, {
-  cors: {
-    origin: ["https://halo-78rf.vercel.app"]
-  }
-});
 
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
@@ -194,6 +191,8 @@ app.get("/getList", async(req, res) => {
 
 //sockets
 
+
+
 io.on('connection', async (socket) => {
 
   try {
@@ -256,8 +255,6 @@ io.on('connection', async (socket) => {
 
 });
 
-app.listen(PORT, () => {
-
-  console.log("server is running")
-
-})
+http.listen(PORT, function(){
+    console.log('Express server listening on port ' + PORT);
+});
