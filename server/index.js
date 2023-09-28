@@ -9,9 +9,9 @@ const bcrypt = require("bcryptjs")
 const PORT = 3001;
 const crypto = require('crypto');
 const secretKey = crypto.randomBytes(32).toString('hex');
-const socketio = require('socket.io');
 
-
+const http = require("http").createServer(app); // Use http.createServer to create an HTTP server
+const io = require("socket.io")(http); // Initialize Socket.io with the HTTP server
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -188,11 +188,6 @@ app.get("/getList", async(req, res) => {
 })
 
 
-const server = app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
-
-const io = socketio(server, { pingTimeout: 60000 });
 
 
 //sockets
@@ -260,4 +255,8 @@ io.on('connection', async (socket) => {
     console.error(error);
   }
 
+});
+
+http.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
