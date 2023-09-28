@@ -25,7 +25,7 @@ const RegisterComponent = () => {
   const RegisterUser = (e) => {
     e.preventDefault()
 
-    Axios.post("http://localhost:3001/RegisterUser", RegInfo).then(() => {
+    Axios.post("https://halo-kappa.vercel.app/RegisterUser", RegInfo).then(() => {
 
       console.log("Registered");
 
