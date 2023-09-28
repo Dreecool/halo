@@ -8,12 +8,7 @@ import io from "socket.io-client";
 const LoginComponents = () => {
 
 
-   const socket = io("wss://halo-kappa.vercel.app", {
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionDelayMax: 5000,
-        reconnectionAttempts: Infinity
-      });
+   const socket = io("https://halo-kappa.vercel.app:3002");
 
   
   Axios.defaults.withCredentials = true
