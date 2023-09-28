@@ -13,9 +13,9 @@ const Home = () => {
 
   useEffect(() => {
 
-    Axios.get("http://localhost:3001/protectedRoute").then(async(response) => {
+    Axios.get("https://halo-kappa.vercel.app/protectedRoute").then(async(response) => {
 
-      Axios.get(`http://localhost:3001/getMessage?ID=${response.data.userID}`).then((response) => {
+      Axios.get(`https://halo-kappa.vercel.app/getMessage?ID=${response.data.userID}`).then((response) => {
 
         setUserID(response.data)
         
