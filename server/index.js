@@ -10,11 +10,9 @@ const PORT =  3001;
 const crypto = require('crypto');
 const socketPort = 3002
 const secretKey = crypto.randomBytes(32).toString('hex');
-const io = require("socket.io")(socketPort, {
-  cors: {
-    origin: ["https://halo-78rf.vercel.app"]
-  }
-}) 
+const http = require("http"); 
+const io = require("socket.io");
+const server = http.createServer(app);
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -259,7 +257,7 @@ io.on('connection', async (socket) => {
   }
 
 });
-
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+server.listen(PORT, () => {
+  console.log("Server is running on port", PORT);
 });
+
