@@ -8,11 +8,8 @@ const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs")
 const PORT =  3001;
 const crypto = require('crypto');
-const socketPort = 3002
 const secretKey = crypto.randomBytes(32).toString('hex');
-const http = require("http"); 
-const server = http.createServer(app);
-const io = require("socket.io")(server); 
+const socket = require("socket.io");
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -188,7 +185,21 @@ app.get("/getList", async(req, res) => {
 
 })
 
+const server = app.listen(PORT, () => {
 
+  console.log("server is runnings")
+
+});
+
+const io = socket(server, {
+
+  cors: {
+    origin: ["https://halo-78rf.vercel.app"],
+    methods: ["POST, GET, DELETE, PUT"],
+    credentials: true,
+  }
+
+})
 
 
 //sockets
@@ -257,7 +268,5 @@ io.on('connection', async (socket) => {
   }
 
 });
-server.listen(PORT, () => {
-  console.log("Server is running on port", PORT);
-});
+
 
