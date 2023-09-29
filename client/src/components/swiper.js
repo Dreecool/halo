@@ -5,7 +5,7 @@ import io from "socket.io-client";
 
 const SwiperComponent = ({ userID }) => {
 
-   const socket = io("https://halo-kappa.vercel.app/:3001");
+    const socket = io("https://halo-kappa.vercel.app/:3001");
 
 
      const [onlineUsers, setOnlineUsers] = useState([]);
