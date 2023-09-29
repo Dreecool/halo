@@ -12,15 +12,7 @@ const secretKey = crypto.randomBytes(32).toString('hex');
 const http = require("http");
 const server = http.createServer(app);
 const socket = require("socket.io");
-const io = socket(server, {
-
-  cors: {
-    origin: ["https://halo-78rf.vercel.app"],
-    methods: ["POST, GET, DELETE, PUT"],
-    credentials: true,
-  }
-
-});
+const io = socket(server);
 
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
@@ -31,7 +23,14 @@ mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnu
 const Register = require("./model/register");
 const Message = require("./model/messages");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["POST, GET, DELETE, PUT"],
+    credentials: true,
+  })
+);
+
 
 
 app.use(express.json());
