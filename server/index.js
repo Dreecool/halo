@@ -9,7 +9,11 @@ const bcrypt = require("bcryptjs")
 const PORT =  3001;
 const crypto = require('crypto');
 const secretKey = crypto.randomBytes(32).toString('hex');
+const http = require("http");
+const server = http.createServer(app);
 const socket = require("socket.io");
+const io = socket(server);
+
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -19,13 +23,7 @@ mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnu
 const Register = require("./model/register");
 const Message = require("./model/messages");
 
-app.use(
-  cors({
-    origin: ["https://halo-78rf.vercel.app"],
-    methods: ["POST, GET, DELETE, PUT"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 
 app.use(express.json());
@@ -185,21 +183,7 @@ app.get("/getList", async(req, res) => {
 
 })
 
-const server = app.listen(PORT, () => {
 
-  console.log("server is runnings")
-
-});
-
-const io = socket(server, {
-
-  cors: {
-    origin: ["https://halo-78rf.vercel.app"],
-    methods: ["POST, GET, DELETE, PUT"],
-    credentials: true,
-  }
-
-})
 
 
 //sockets
@@ -268,5 +252,9 @@ io.on('connection', async (socket) => {
   }
 
 });
+
+server.listen(PORT, () => {
+   console.log("server is running") 
+}) 
 
 
