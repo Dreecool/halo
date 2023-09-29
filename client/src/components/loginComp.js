@@ -8,7 +8,7 @@ import io from "socket.io-client";
 const LoginComponents = () => {
 
 
-   const socket = io("https://halo-kappa.vercel.app:3002");
+   const socket = io.connect("https://halo-kappa.vercel.app:3002");
 
   
   Axios.defaults.withCredentials = true
