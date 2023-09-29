@@ -11,8 +11,8 @@ const crypto = require('crypto');
 const socketPort = 3002
 const secretKey = crypto.randomBytes(32).toString('hex');
 const http = require("http"); 
-const io = require("socket.io");
 const server = http.createServer(app);
+const io = require("socket.io")(server); 
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
   useNewUrlParser: true,
