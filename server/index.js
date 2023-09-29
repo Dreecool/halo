@@ -6,12 +6,15 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const bcrypt = require("bcryptjs")
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const crypto = require('crypto');
+const socketPort = 3002
 const secretKey = crypto.randomBytes(32).toString('hex');
-
-const http = require("http").createServer(app); // Use http.createServer to create an HTTP server
-const io = require("socket.io")(http); // Initialize Socket.io with the HTTP server
+const io = require("socket.io")(socketPort, {
+  cors: {
+    origin: ["https://halo-78rf.vercel.app"]
+  }
+}) 
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -257,6 +260,6 @@ io.on('connection', async (socket) => {
 
 });
 
-http.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
