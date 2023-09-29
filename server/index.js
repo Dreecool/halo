@@ -12,7 +12,13 @@ const secretKey = crypto.randomBytes(32).toString('hex');
 const http = require("http");
 const server = http.createServer(app);
 const socket = require("socket.io");
-const io = socket(server);
+const io = socket(server, {
+
+  cors: {
+    origin: ["http://localhost:3000"]
+  }
+
+});
 
 
 mongoose.connect("mongodb+srv://francesdonaire:chatforte123456@chat-forte-db.xnufm5f.mongodb.net/chat-forte?retryWrites=true&w=majority", {
